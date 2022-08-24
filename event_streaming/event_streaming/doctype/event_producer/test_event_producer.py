@@ -2,9 +2,10 @@
 # License: MIT. See LICENSE
 import json
 
+from event_streaming.event_streaming.doctype.event_producer.event_producer import pull_from_node
+
 import frappe
 from frappe.core.doctype.user.user import generate_keys
-from frappe.event_streaming.doctype.event_producer.event_producer import pull_from_node
 from frappe.frappeclient import FrappeClient
 from frappe.query_builder.utils import db_type_is
 from frappe.tests.test_query_builder import run_only_if
@@ -202,7 +203,7 @@ class TestEventProducer(FrappeTestCase):
 		event_producer = frappe.get_doc("Event Producer", producer_url)
 		note_producer_entry = [x for x in event_producer.producer_doctypes if x.ref_doctype == "Note"][0]
 		note_producer_entry.condition = (
-			"cmd: frappe.event_streaming.doctype.event_producer.test_event_producer.can_sync_note"
+			"cmd: event_streaming.event_streaming.doctype.event_producer.test_event_producer.can_sync_note"
 		)
 		event_producer.save()
 

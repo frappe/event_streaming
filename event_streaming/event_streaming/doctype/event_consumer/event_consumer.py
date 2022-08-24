@@ -150,7 +150,7 @@ def notify(consumer):
 			client = get_consumer_site(consumer.callback_url)
 			client.post_request(
 				{
-					"cmd": "frappe.event_streaming.doctype.event_producer.event_producer.new_event_notification",
+					"cmd": "event_streaming.event_streaming.doctype.event_producer.event_producer.new_event_notification",
 					"producer_url": get_url(),
 				}
 			)
@@ -162,7 +162,7 @@ def notify(consumer):
 
 	# enqueue another job if the site was not notified
 	if not consumer.flags.notified:
-		enqueued_method = "frappe.event_streaming.doctype.event_consumer.event_consumer.notify"
+		enqueued_method = "event_streaming.event_streaming.doctype.event_consumer.event_consumer.notify"
 		jobs = get_jobs()
 		if not jobs or enqueued_method not in jobs[frappe.local.site] and not consumer.flags.notifed:
 			frappe.enqueue(
